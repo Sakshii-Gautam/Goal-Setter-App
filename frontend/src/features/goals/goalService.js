@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/goals';
+const API_URL = 'https://goal-setter-app-lgth.onrender.com/api/goals';
 
 //Get Goals
 export const getGoals = createAsyncThunk(
