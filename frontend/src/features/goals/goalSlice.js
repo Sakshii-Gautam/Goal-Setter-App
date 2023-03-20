@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createGoal, deleteGoal, getGoals } from './goalService';
+import { createGoal, deleteGoal, getGoals, updateGoal } from './goalService';
 
 const initialState = {
   goals: [],
@@ -56,6 +56,22 @@ const goalSlice = createSlice({
         );
       })
       .addCase(deleteGoal.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(updateGoal.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateGoal.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.goals = [
+          ...state.goals.filter((goal) => goal._id !== action.payload._id),
+          action.payload,
+        ];
+      })
+      .addCase(updateGoal.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
